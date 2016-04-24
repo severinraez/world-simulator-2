@@ -1,7 +1,5 @@
 'use strict'
 
-let expect = require('chai').expect
-
 let converge = require('../converge.js')
 
 describe('converge', function () {
