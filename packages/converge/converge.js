@@ -1,7 +1,6 @@
 'use strict'
 
 let _ = require('underscore')
-let api = {}
 
 /*
     converge modifies objects in place using a protocol coding which changes to apply.
@@ -116,11 +115,12 @@ let recursiveApply = (data, delta) => {
     })
 }
 
+let api = {}
+
 api.applyDelta = (data, delta) => {
     recursiveApply(data, delta)
 
     return data;
 }
-
 
 define(api)
