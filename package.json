@@ -1,0 +1,26 @@
+{
+  "name": "world-simulator-2",
+  "version": "0.0.1",
+  "description": "This won't attempt to simulate the world.",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/severinraez/world-simulator-2.git"
+  },
+  "author": "Severin Räz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/severinraez/world-simulator-2/issues"
+  },
+  "homepage": "https://github.com/severinraez/world-simulator-2#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "glob": "^7.0.3",
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.3"
+  }
+}

@@ -2,7 +2,8 @@ module.exports = {
     "context": __dirname,
     "entry": {
         "client": "./client",
-        "server": "./server"
+        "server": "./server",
+        "testing": "./tests"
     },
     "output": {
         "path": __dirname + "/dist",
