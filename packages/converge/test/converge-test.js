@@ -4,12 +4,12 @@ let expect = require('chai').expect
 
 let converge = require('../converge.js')
 
-describe('replication', () => {
+describe('replication', function () {
     before(function() {
     })
 
     describe('primitive values', function() {
-        let verify = (data, delta, expected) => {
+        let verify = function (data, delta, expected) {
             let processed = converge.applyDelta(data, delta)
 
             expect(processed).to.equal(expected)

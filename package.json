@@ -21,6 +21,10 @@
     "chai": "^3.5.0",
     "glob": "^7.0.3",
     "mocha": "^2.4.5",
-    "sinon": "^1.17.3"
+    "sinon": "^1.17.3",
+    "webpack-sources": "^0.1.2"
+  },
+  "dependencies": {
+    "underscore": "^1.8.3"
   }
 }

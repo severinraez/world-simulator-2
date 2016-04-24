@@ -1,5 +1,6 @@
 'use strict'
 
+let _ = require('underscore')
 let api = {}
 
 /*
@@ -19,7 +20,7 @@ let isOperation = (key) => {
 }
 
 let recursiveApply = (data, delta) => {
-    delta.forEach((key, value) => {
+    _.each(data, (value, key) => {
         if(isOperation(key)) {
 
             let operation = operations[key]
