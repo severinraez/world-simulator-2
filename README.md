@@ -10,5 +10,4 @@ Webpack server:
  
 Tests:
 
-    webpack
-    node node_modules/mocha/bin/mocha --harmony --use_strict dist/testing.bundle.js 
+    webpack && node node_modules/mocha/bin/mocha --harmony --use_strict dist/testing.bundle.js

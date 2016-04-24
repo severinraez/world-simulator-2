@@ -4,17 +4,17 @@ let expect = require('chai').expect
 
 let converge = require('../converge.js')
 
-describe('replication', function () {
+describe('converge', function () {
     before(function() {
     })
 
+    let verify = (data, delta, expected) => {
+        let processed = converge.applyDelta(data, delta)
+
+        expect(processed).to.eql(expected)
+    }
+
     describe('primitive values', function() {
-        let verify = function (data, delta, expected) {
-            let processed = converge.applyDelta(data, delta)
-
-            expect(processed).to.equal(expected)
-        }
-
 	      it('adds keys', function() {
             verify({}, {foo: 'bar'}, {foo: 'bar'})
 	      })
@@ -44,10 +44,10 @@ describe('replication', function () {
             it('multi-dimensional manipulation', function() {
                 verify({ a: [[1, 2], [3, 4]] },
                        { a: { $idx: { dim: 2, delta: [0, 0, 'changed'] }}},
-                       { a: [['changed', 1], [3, 4]]})
+                       { a: [['changed', 2], [3, 4]]})
                 verify({ a: [[1, 2], [3, 4]] },
                        { a: { $idx: { dim: 2, delta: [0, 0, 'changed', 1, 0, 'changed2'] }}},
-                       { a: [['changed', 1], ['changed2', 4]]})
+                       { a: [['changed', 2], ['changed2', 4]]})
             })
         })
     })
