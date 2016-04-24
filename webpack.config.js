@@ -40,5 +40,9 @@ module.exports = {
     "devtool": 'eval',
     plugins: [
         new StrictPlugin({ root: __dirname+"/packages" })
-    ]
+    ],
+    resolve: {
+        modulesDirectories: [__dirname + '/webpack_namespace_extension', // make require('packages/xy') work
+                             'node_modules'] 
+    }
 }
