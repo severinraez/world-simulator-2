@@ -1,12 +1,12 @@
+'use strict'
+
 const ws = require("nodejs-websocket")
 
-const Connection = require("./websocket-connection").klsdd
-
-const DEFAULT_PORT = 8001
+const Connection = require("./websocket-connection").klass
 
 class Server {
-    constructor(options) {
-        this.port = options.port || DEFAULT_PORT
+    constructor(port) {
+        this.port = port
         this.connectionCallback = null
         this.server = null
     }

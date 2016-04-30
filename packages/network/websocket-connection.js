@@ -8,7 +8,7 @@ class Connection {
 
     onMessage(callback) {
         this.messageCallback = callback
-        this.connection.on('text', function(str) {
+        this.connection.on('text', (str) => {
             this.messageCallback(JSON.parse(str))
         })
     }

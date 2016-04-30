@@ -1,12 +1,18 @@
-const Server = require('packages/network/websocket-server')
-const NodeClient = require('packages/network/websocket-client-node')
+const Server = require('packages/network/websocket-server').klass
+const NodeClient = require('packages/network/websocket-client-node').klass
 
 describe('network/websocket', () => {
+
+    const PORT = 50432
+
+    const SERVER_HELLO_MESSAGE = 'hello from server'
+    const CLIENT_HELLO_MESSAGE = 'hello from client'
+    const CLIENT_FAIL_MESSAGE = 'fail from client'
 
     let setupServer = (connectionCallback) => {
         this.messages = []
 
-        let server = Server.new()
+        let server = new Server(PORT)
 
         server.onConnection((connection) => {
             connectionCallback(connection)
@@ -25,24 +31,20 @@ describe('network/websocket', () => {
         })
     }
 
-    let verifyCommunication = (connection, done) {
+    let verifyCommunication = (connection, done) => {
         connection.send({msg: SERVER_HELLO_MESSAGE})
 
-        connection.onMessage(message) {
+        connection.onMessage((message) => {
             expect(message.msg).to.equal(CLIENT_HELLO_MESSAGE)
 
             done()
-        }
+        })
     }
 
     describe('node.js server, node.js client', function() {
 
         it('connects and exchanges messages', function(done) {
-            let SERVER_HELLO_MESSAGE = 'hello from server'
-            let CLIENT_HELLO_MESSAGE = 'hello from client'
-            let CLIENT_FAIL_MESSAGE = 'fail from client'
-
-            let client = NodeClient.new({ server: 'localhost' })
+            let client = new NodeClient('localhost', PORT)
 
             client.onConnected((connection) => {
                 replyToHello(connection)
@@ -57,7 +59,7 @@ describe('network/websocket', () => {
     })
 
     describe('node.js server, browser client', function() {
-
+        return
         //const Client = require('packages/network/websocket-client-browser')
 
         let runWebserver = () => {
