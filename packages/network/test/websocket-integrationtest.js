@@ -1,3 +1,10 @@
+/*
+ Tests the websocket interface both for node.js server and client and node.js server and browser client.
+
+ The browser dummy client used throughout the tests is located in ./client/.
+ Some reused testing code (which messages are sent, client behaviour, networking config) is located in ./case-details - this is used both by the node and browser dummy client as well as the testing server.
+*/
+
 const Server = require('packages/network/websocket-server').klass
 const NodeClient = require('packages/network/websocket-client-node').klass
 
@@ -8,6 +15,7 @@ const caseDetails = require('packages/network/test/case-details')
 
 describe('network/websocket', () => {
 
+    // Let the server liste and pass incoming connections to the given callback.
     let setupServer = (connectionCallback) => {
         this.messages = []
 
@@ -22,6 +30,8 @@ describe('network/websocket', () => {
         return server
     }
 
+    // Send a message to the client and expect him to acknowledge receipt
+    // by sending the correct answer.
     let verifyCommunication = (connection, done) => {
         connection.send({msg: caseDetails.SERVER_HELLO_MESSAGE})
 
@@ -58,6 +68,8 @@ describe('network/websocket', () => {
 
         this.timeout(5000)
 
+        // Serve the client in ./client using webpack-dev-server, call
+        // the given if ready.
         let startWebserver = (callback) => {
             let webRoot = 'packages/network/test/client'
 
@@ -93,6 +105,8 @@ describe('network/websocket', () => {
             }
         }
 
+        // Start a browser and let him execute the client code
+        // (could we go headless?)
         let startBrowser = () => {
             this.browser = spawn('google-chrome', ['--incognito', 'http://localhost:' + WEBPACK_DEV_SERVER_PORT])
         }
@@ -103,7 +117,6 @@ describe('network/websocket', () => {
             }
         }
 
-
         it('connects and exchanges messages', (done) => {
 
             this.server = setupServer((connection) => {
@@ -112,6 +125,7 @@ describe('network/websocket', () => {
                 })
             })
 
+            // Wait for the webserver to be ready, then start the browser
             startWebserver(startBrowser)
         })
 
