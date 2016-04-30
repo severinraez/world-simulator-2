@@ -1,6 +1,8 @@
 const Server = require('packages/network/websocket-server').klass
 const NodeClient = require('packages/network/websocket-client-node').klass
 
+const spawn = require('child_process').spawn;
+
 describe('network/websocket', () => {
 
     const PORT = 50432
@@ -63,21 +65,47 @@ describe('network/websocket', () => {
         //const Client = require('packages/network/websocket-client-browser')
 
         let runWebserver = () => {
-            // run webpack dev server
+            this.webserver = spawn('webpack-dev-server', '--config', 'webpack.config.js')
         }
 
-        it('connects and exchanges messages', function() {
-            setupServer((connection) => {
-                verifyCommunication(connection, done)
-            })
+        let killWebserver = () => {
+            this.webserver.kill()
+        }
 
-            runWebserver('./test-server')
-            startBrowser()
+        let startBrowser = () => {
+            this.browser = spawn('google-chrome --incognito http://localhost:' + PORT)
+        }
 
-            killBrowser()
-            killWebserver()
+        let killBrowser = () => {
+            this.browser.kill()
+        }
+
+        it('connects and exchanges messages', () => {
+            let cleanup = () => {
+                killBrowser()
+                killWebserver()
+            }
+
+            try {
+
+                setupServer((connection) => {
+                    verifyCommunication(connection, () => {
+                        cleanup()
+
+                        done()
+                    })
+
+                })
+
+                runWebserver('./test-server')
+                startBrowser()
+
+            }
+            catch(exception) {
+                cleanup()
+                done(exception)
+            }
         })
 
     })
 })
-

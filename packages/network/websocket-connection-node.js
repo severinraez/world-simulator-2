@@ -1,11 +1,8 @@
 'use strict'
 
-class Connection {
-    constructor(connection) {
-        this.connection = connection
-        this.messageCallback = null
-    }
+const BaseConnection = require('./websocket-connection-base.js').klass
 
+class NodeConnection extends BaseConnection {
     onMessage(callback) {
         this.messageCallback = callback
         this.connection.on('text', (str) => {
@@ -18,4 +15,4 @@ class Connection {
     }
 }
 
-define({klass: Connection})
+define({klass: NodeConnection})

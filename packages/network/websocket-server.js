@@ -2,7 +2,7 @@
 
 const ws = require("nodejs-websocket")
 
-const Connection = require("./websocket-connection").klass
+const Connection = require("./websocket-connection-node").klass
 
 class Server {
     constructor(port) {

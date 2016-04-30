@@ -2,19 +2,10 @@
 
 const ws = require("nodejs-websocket")
 
-const Connection = require("./websocket-connection").klass
+const Connection = require("./websocket-connection-node").klass
+const BaseClient = require("./websocket-client-base").klass
 
-class NodeClient {
-    constructor(host, port) {
-        this.host = host
-        this.port = port
-
-        this.connectedCallback = null
-        this.connection = null
-    }
-
-    onConnected(callback) { this.connectedCallback = callback }
-
+class NodeClient extends BaseClient {
     connect() {
         this.connection = ws.connect(this._url())
         this.connection.on('connect', () => {
@@ -22,10 +13,6 @@ class NodeClient {
 
             this.connectedCallback(wrappedConnection)
         })
-    }
-
-    _url() {
-        return 'ws://' + this.host + ':' + this.port + '/'
     }
 }
 
