@@ -69,7 +69,7 @@ describe('network/websocket', () => {
         this.timeout(5000)
 
         // Serve the client in ./client using webpack-dev-server, call
-        // the given if ready.
+        // the given callback when ready.
         let startWebserver = (callback) => {
             let webRoot = 'packages/network/test/client'
 
@@ -78,19 +78,18 @@ describe('network/websocket', () => {
                                    { cwd: webRoot })
             let waiting = true;
             this.webserver.stdout.on('data', (data) => {
-                // Left for debugging.
+                // Left here for debugging.
                 //console.log('webpack-dev-server stdout', data.toString())
 
                 if(!waiting) {
-                    return
-                }
+                    return }
 
                 let output = data.toString()
 
                 let compilationFailed = output.match("ERROR")
                 if(compilationFailed) {
-                    throw new Error ("Compilation failed while starting webpack-dev-server, output follows\n" + output)
-                }
+                    throw new Error ("Compilation failed while starting webpack-dev-server, output follows\n" + output) }
+
 
                 let serverReady = output.match("VALID")
                 if(serverReady) {
@@ -101,8 +100,7 @@ describe('network/websocket', () => {
 
         let killWebserver = () => {
             if(this.webserver) {
-                this.webserver.kill()
-            }
+                this.webserver.kill() }
         }
 
         // Start a browser and let him execute the client code
@@ -113,8 +111,7 @@ describe('network/websocket', () => {
 
         let killBrowser = () => {
             if(this.browser) {
-                this.browser.kill()
-            }
+                this.browser.kill() }
         }
 
         it('connects and exchanges messages', (done) => {
