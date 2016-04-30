@@ -1,5 +1,8 @@
 "use strict";
 
+const fs = require('fs')
+const _ = require('underscore')
+
 //fixes ignored "use strict" statements in sources.
 //workaround for https://github.com/webpack/webpack/issues/1970 found on
 //https://gist.github.com/mastercactapus/05da17090e4a49d23173
@@ -25,13 +28,8 @@ class StrictPlugin {
     }
 }
 
-module.exports = {
+let baseConfig = {
     "context": __dirname,
-    "entry": {
-        "client": "./client",
-        "server": "./server",
-        "testing": "./tests"
-    },
     "output": {
         "path": __dirname + "/dist",
         "filename": "[name].bundle.js",
@@ -42,7 +40,25 @@ module.exports = {
         new StrictPlugin({ root: __dirname+"/packages" })
     ],
     resolve: {
-        modulesDirectories: [__dirname + '/webpack_namespace_extension', // make require('packages/xy') work
-                             'node_modules'] 
+        modulesDirectories: [__dirname + '/webpack_namespace_extension',                              // make require('packages/xy') work
+                             'node_modules']
     }
 }
+
+let clientConfig = _.extend({
+    entry: {
+        "client": "./client"
+    }
+}, baseConfig)
+
+let serverConfig = _.extend({
+    entry: {
+        "server": "./server",
+        "testing": "./tests",
+        "integration-testing": "./integration-tests"
+    },
+    target: 'node'
+}, baseConfig)
+
+
+module.exports = [serverConfig, clientConfig]
