@@ -25,6 +25,10 @@ class Server {
 
         this.server.listen(this.port)
     }
+
+    close(callback) {
+        this.server.close(callback)
+    }
 }
 
 define({klass: Server})

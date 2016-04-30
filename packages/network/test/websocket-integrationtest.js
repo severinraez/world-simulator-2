@@ -2,42 +2,31 @@ const Server = require('packages/network/websocket-server').klass
 const NodeClient = require('packages/network/websocket-client-node').klass
 
 const spawn = require('child_process').spawn;
+const execSync = require('child_process').execSync;
+
+const caseDetails = require('packages/network/test/case-details')
 
 describe('network/websocket', () => {
-
-    const PORT = 50432
-
-    const SERVER_HELLO_MESSAGE = 'hello from server'
-    const CLIENT_HELLO_MESSAGE = 'hello from client'
-    const CLIENT_FAIL_MESSAGE = 'fail from client'
 
     let setupServer = (connectionCallback) => {
         this.messages = []
 
-        let server = new Server(PORT)
+        let server = new Server(caseDetails.WEBSOCKET_PORT)
 
         server.onConnection((connection) => {
             connectionCallback(connection)
         })
 
         server.listen()
-    }
 
-    let replyToHello = (connection) => {
-        connection.onMessage((message) => {
-            if(message.msg == SERVER_HELLO_MESSAGE) {
-                connection.send({ msg: CLIENT_HELLO_MESSAGE }) }
-            else {
-                connection.send({ msg: CLIENT_FAIL_MESSAGE })
-            }
-        })
+        return server
     }
 
     let verifyCommunication = (connection, done) => {
-        connection.send({msg: SERVER_HELLO_MESSAGE})
+        connection.send({msg: caseDetails.SERVER_HELLO_MESSAGE})
 
         connection.onMessage((message) => {
-            expect(message.msg).to.equal(CLIENT_HELLO_MESSAGE)
+            expect(message.msg).to.equal(caseDetails.CLIENT_HELLO_MESSAGE)
 
             done()
         })
@@ -45,66 +34,92 @@ describe('network/websocket', () => {
 
     describe('node.js server, node.js client', function() {
 
-        it('connects and exchanges messages', function(done) {
-            let client = new NodeClient('localhost', PORT)
+        it('connects and exchanges messages', (done) => {
+            let client = new NodeClient('localhost', caseDetails.WEBSOCKET_PORT)
 
             client.onConnected((connection) => {
-                replyToHello(connection)
+                caseDetails.replyToHello(connection)
             })
 
-            setupServer((connection) => {
+            this.server = setupServer((connection) => {
                 verifyCommunication(connection, done)
             })
 
             client.connect()
         })
+
+        afterEach(() => {
+            this.server.close()
+        })
     })
 
     describe('node.js server, browser client', function() {
-        return
-        //const Client = require('packages/network/websocket-client-browser')
+        const WEBPACK_DEV_SERVER_PORT = 8080
 
-        let runWebserver = () => {
-            this.webserver = spawn('webpack-dev-server', '--config', 'webpack.config.js')
+        this.timeout(5000)
+
+        let startWebserver = (callback) => {
+            let webRoot = 'packages/network/test/client'
+
+            this.webserver = spawn('webpack-dev-server',
+                                   ['--config', 'webpack.config.js'],
+                                   { cwd: webRoot })
+            let waiting = true;
+            this.webserver.stdout.on('data', (data) => {
+                // Left for debugging.
+                //console.log('webpack-dev-server stdout', data.toString())
+
+                if(!waiting) {
+                    return
+                }
+
+                let output = data.toString()
+
+                let compilationFailed = output.match("ERROR")
+                if(compilationFailed) {
+                    throw new Error ("Compilation failed while starting webpack-dev-server, output follows\n" + output)
+                }
+
+                let serverReady = output.match("VALID")
+                if(serverReady) {
+                    waiting = false
+                    callback() }
+            })
         }
 
         let killWebserver = () => {
-            this.webserver.kill()
+            if(this.webserver) {
+                this.webserver.kill()
+            }
         }
 
         let startBrowser = () => {
-            this.browser = spawn('google-chrome --incognito http://localhost:' + PORT)
+            this.browser = spawn('google-chrome', ['--incognito', 'http://localhost:' + WEBPACK_DEV_SERVER_PORT])
         }
 
         let killBrowser = () => {
-            this.browser.kill()
+            if(this.browser) {
+                this.browser.kill()
+            }
         }
 
-        it('connects and exchanges messages', () => {
-            let cleanup = () => {
-                killBrowser()
-                killWebserver()
-            }
 
-            try {
+        it('connects and exchanges messages', (done) => {
 
-                setupServer((connection) => {
-                    verifyCommunication(connection, () => {
-                        cleanup()
-
-                        done()
-                    })
-
+            this.server = setupServer((connection) => {
+                verifyCommunication(connection, () => {
+                    done()
                 })
+            })
 
-                runWebserver('./test-server')
-                startBrowser()
+            startWebserver(startBrowser)
+        })
 
-            }
-            catch(exception) {
-                cleanup()
-                done(exception)
-            }
+        afterEach(() => {
+            this.server.close()
+
+            killBrowser()
+            killWebserver()
         })
 
     })

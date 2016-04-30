@@ -25,7 +25,7 @@
     "webpack-sources": "^0.1.2"
   },
   "dependencies": {
-    "nodejs-websocket": "^1.5.0",
+    "nodejs-websocket": "sitegui/nodejs-websocket#baf65002082fa2e173eafd8aa25b2a1c695346e3",
     "underscore": "^1.8.3"
   }
 }
