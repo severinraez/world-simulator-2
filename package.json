@@ -4,8 +4,9 @@
   "description": "This won't attempt to simulate the world.",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
-    "start": "node server.js"
+    "unit-tests": "webpack && mocha --harmony dist/testing.bundle.js",
+    "integration-tests": "webpack && mocha --harmony dist/integration-testing.bundle.js",
+    "start-client": "webpack-dev-server --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
     "chai": "^3.5.0",
     "glob": "^7.0.3",
     "mocha": "^2.4.5",
+    "raw-loader": "^0.5.1",
     "sinon": "^1.17.3",
     "webpack-sources": "^0.1.2"
   },

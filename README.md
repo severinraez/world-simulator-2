@@ -6,14 +6,14 @@ Use node v5.
 
 Webpack server:
 
-    webpack-dev-server --progress --colors
+    npm run-script start-client
  
 # Tests
 
 ## Unit
 
-    webpack && node node_modules/mocha/bin/mocha --harmony --use_strict dist/testing.bundle.js
+    npm run-script unit-tests
     
 ## Integration
 
-    webpack && node node_modules/mocha/bin/mocha --harmony --use_strict dist/integration-testing.bundle.js
+    npm run-script integration-tests
