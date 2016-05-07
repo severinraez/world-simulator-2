@@ -48,6 +48,11 @@ let baseConfig = {
 let clientConfig = _.extend({
     entry: {
         "client": "./client"
+    },
+    module: {
+        loaders: [{
+            test: /\.html$/, loader: 'raw-loader'
+        }]
     }
 }, baseConfig)
 
