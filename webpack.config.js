@@ -33,9 +33,10 @@ let baseConfig = {
     "output": {
         "path": __dirname + "/dist",
         "filename": "[name].bundle.js",
-        "chunkFilename": "[id].bundle.js"
+        "chunkFilename": "[id].bundle.js",
+        "sourceMapFilename": "[name].bundle.map"
     },
-    devtool: 'cheap-eval-source-map',
+    devtool: 'source-map',
     plugins: [
         new StrictPlugin({ root: __dirname+"/packages" })
     ],

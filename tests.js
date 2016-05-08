@@ -1,5 +1,7 @@
 'use strict'
 
+require('source-map-support').install()
+
 global.expect = require('chai').expect
 
 /* With growing complexity this list should be automatically generated.

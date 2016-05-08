@@ -1,6 +1,9 @@
 'use strict'
 
+require('source-map-support').install()
+
 global.expect = require('chai').expect
+
 
 /* With growing complexity this list should be automatically generated.
  Just globbing over the files and require them here won't work because it
