@@ -7,4 +7,4 @@ class BaseConnection {
     }
 }
 
-define({klass: BaseConnection})
+export default BaseConnection

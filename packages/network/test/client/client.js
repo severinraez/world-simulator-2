@@ -1,7 +1,7 @@
 'use strict'
 
-const Client = require('../../websocket-client-browser.js').klass
-const caseDetails = require('../case-details')
+import Client from '../../websocket-client-browser.js'
+import caseDetails from'../case-details'
 
 const PORT = 50432
 

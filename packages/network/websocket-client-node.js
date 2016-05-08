@@ -1,9 +1,9 @@
 'use strict'
 
-const ws = require("nodejs-websocket")
+import ws from "nodejs-websocket"
 
-const Connection = require("./websocket-connection-node").klass
-const BaseClient = require("./websocket-client-base").klass
+import Connection from './websocket-connection-node'
+import BaseClient from './websocket-client-base'
 
 class NodeClient extends BaseClient {
     connect() {
@@ -16,4 +16,4 @@ class NodeClient extends BaseClient {
     }
 }
 
-define({klass: NodeClient})
+export default NodeClient

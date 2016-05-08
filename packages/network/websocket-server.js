@@ -1,8 +1,8 @@
 'use strict'
 
-const ws = require("nodejs-websocket")
+import ws from 'nodejs-websocket'
 
-const Connection = require("./websocket-connection-node").klass
+import Connection from './websocket-connection-node'
 
 class Server {
     constructor(port) {
@@ -31,4 +31,4 @@ class Server {
     }
 }
 
-define({klass: Server})
+export default Server

@@ -1,6 +1,6 @@
 'use strict'
 
-const BaseConnection = require('./websocket-connection-base.js').klass
+import BaseConnection from './websocket-connection-base'
 
 class NodeConnection extends BaseConnection {
     onMessage(callback) {
@@ -15,4 +15,4 @@ class NodeConnection extends BaseConnection {
     }
 }
 
-define({klass: NodeConnection})
+export default NodeConnection

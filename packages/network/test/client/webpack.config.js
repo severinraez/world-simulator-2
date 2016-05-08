@@ -26,13 +26,13 @@ class StrictPlugin {
 }
 
 let config = {
-    "context": __dirname,
-    "output": {
+    context: __dirname,
+    output: {
         "path": __dirname + "/dist",
         "filename": "[name].bundle.js",
         "chunkFilename": "[id].bundle.js"
     },
-    "devtool": 'eval',
+    devtool: 'eval',
     plugins: [
         new StrictPlugin({ root: __dirname+"/packages" })
     ],
@@ -42,6 +42,16 @@ let config = {
     },
     entry: {
         "client": "./client"
+    },
+    module: {
+        loaders: [
+            { test: /.jsx?$/, loader: 'babel-loader',
+              exclude: /node_modules/,
+              query: {
+                  presets: ['es2015', 'react']
+              }
+            }
+        ]
     }
 }
 

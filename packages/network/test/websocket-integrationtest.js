@@ -5,13 +5,14 @@
  Some reused testing code (which messages are sent, client behaviour, networking config) is located in ./case-details - this is used both by the node and browser dummy client as well as the testing server.
 */
 
-const Server = require('packages/network/websocket-server').klass
-const NodeClient = require('packages/network/websocket-client-node').klass
+import Server from 'packages/network/websocket-server'
+import NodeClient from 'packages/network/websocket-client-node'
 
-const spawn = require('child_process').spawn;
-const execSync = require('child_process').execSync;
+import * as child_process from 'child_process'
+const spawn = child_process.spawn
+const execSync = child_process.execSync
 
-const caseDetails = require('packages/network/test/case-details')
+import caseDetails from 'packages/network/test/case-details'
 
 describe('network/websocket', () => {
 

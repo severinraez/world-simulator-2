@@ -20,7 +20,7 @@ let replyToHello = (connection) => {
 }
 
 
-define({
+export default {
     WEBSOCKET_PORT: WEBSOCKET_PORT,
 
     SERVER_HELLO_MESSAGE: SERVER_HELLO_MESSAGE,
@@ -28,4 +28,4 @@ define({
     CLIENT_FAIL_MESSAGE: CLIENT_FAIL_MESSAGE,
 
     replyToHello: replyToHello
-})
+}

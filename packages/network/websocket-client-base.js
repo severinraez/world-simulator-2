@@ -20,4 +20,4 @@ class BaseClient {
     }
 }
 
-define({klass: BaseClient})
+export default BaseClient
