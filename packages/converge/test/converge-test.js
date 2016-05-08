@@ -1,6 +1,6 @@
 'use strict'
 
-let converge = require('../converge.js')
+import converge from '../converge.js'
 
 describe('converge', function () {
     before(function() {

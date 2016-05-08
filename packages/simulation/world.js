@@ -1,6 +1,6 @@
 'use strict'
 
-let converge = require('packages/converge')
+import converge from 'packages/converge'
 
 const World = class {
     constructor(state) {

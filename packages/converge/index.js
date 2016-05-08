@@ -1,3 +1,5 @@
 'use strict'
 
-define(require('./converge'))
+import converge from './converge'
+
+export default converge

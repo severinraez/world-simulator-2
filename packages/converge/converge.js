@@ -1,6 +1,6 @@
 'use strict'
 
-let _ = require('underscore')
+import _ from 'underscore'
 
 /*
     converge modifies objects in place using a protocol coding which changes to apply.
@@ -123,4 +123,4 @@ api.applyDelta = (data, delta) => {
     return data;
 }
 
-define(api)
+export default api

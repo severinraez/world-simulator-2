@@ -1,12 +1,13 @@
 'use strict'
 
-require('source-map-support').install()
+import 'source-map-support/register'
+import chai from 'chai'
 
-global.expect = require('chai').expect
+global.expect = chai.expect
 
 
 /* With growing complexity this list should be automatically generated.
- Just globbing over the files and require them here won't work because it
+ Simply globbing over the files and import them here won't work because it
  confuses webpack. */
 
-require('./packages/network/test/websocket-integrationtest')
+import './packages/network/test/websocket-integrationtest'

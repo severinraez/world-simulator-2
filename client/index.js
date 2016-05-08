@@ -1,7 +1,4 @@
 'use strict'
 
-require('./index.html')
-require('./hello-world.jsx')
-
-define([], function() {
-})
+import './index.html'
+import './hello-world.jsx'
