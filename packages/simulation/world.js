@@ -22,4 +22,4 @@ const World = class {
     }
 }
 
-define({ klass: World }) // TODO: why does define(World) fail?
+export default World;

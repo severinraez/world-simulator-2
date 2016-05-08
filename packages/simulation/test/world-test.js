@@ -1,6 +1,6 @@
 'use strict'
 
-let World = require('../world').klass
+import World from '../world'
 
 describe('simulation/world', function () {
 

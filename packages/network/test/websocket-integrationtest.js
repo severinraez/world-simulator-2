@@ -17,8 +17,6 @@ describe('network/websocket', () => {
 
     // Let the server liste and pass incoming connections to the given callback.
     let setupServer = (connectionCallback) => {
-        this.messages = []
-
         let server = new Server(caseDetails.WEBSOCKET_PORT)
 
         server.onConnection((connection) => {

@@ -42,19 +42,13 @@ let baseConfig = {
     resolve: {
         modulesDirectories: [__dirname + '/webpack_namespace_extension',                              // make require('packages/xy') work
                              'node_modules']
-    }
-}
-
-let clientConfig = _.extend({
-    entry: {
-        "client": "./client"
     },
     module: {
         loaders: [
             { test: /\.html$/, loader: 'raw-loader' },
 
             // react config from https://www.twilio.com/blog/2015/08/setting-up-react-for-es6-with-webpack-and-babel-2.html
-            { test: /.jsx$/, loader: 'babel-loader',
+            { test: /.jsx?$/, loader: 'babel-loader',
               exclude: /node_modules/,
               query: {
                   presets: ['es2015', 'react']
@@ -62,6 +56,13 @@ let clientConfig = _.extend({
             }
         ]
     }
+
+}
+
+let clientConfig = _.extend({
+    entry: {
+        "client": "./client"
+    },
 }, baseConfig)
 
 let serverConfig = _.extend({
